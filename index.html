@@ -3,246 +3,396 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Web Maker — 티켓 관리</title>
+<title>Web Maker — 티켓 시스템</title>
 <style>
-  *{box-sizing:border-box;margin:0;padding:0}
-  :root{
-    --bg:#0a0a0a;--bg2:#111;--bg3:#1a1a1a;
-    --border:#2a2a2a;--border2:#333;
-    --text:#f0f0f0;--text2:#999;--text3:#666;
-    --purple:#7c5cbf;--purple2:#9b7fd4;--purple3:#3d2d6b;
-    --green:#2a7a4b;--green-t:#1a3d28;--green-text:#5dd68a;
-    --amber:#7a5c1a;--amber-t:#3d2d0a;--amber-text:#f0b840;
-    --red:#7a2a2a;--red-t:#3d1414;--red-text:#f07070;
-    --blue-t:#1a2d3d;--blue-text:#70b8f0;
-  }
-  body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh}
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0a;--bg2:#111;--bg3:#1a1a1a;--bg4:#222;
+  --border:#2a2a2a;--border2:#333;
+  --text:#f0f0f0;--text2:#999;--text3:#666;
+  --purple:#7c5cbf;--purple2:#9b7fd4;--purple3:#3d2d6b;
+  --green-t:#1a3d28;--green-text:#5dd68a;
+  --amber-t:#3d2d0a;--amber-text:#f0b840;
+  --red-t:#3d1414;--red-text:#f07070;
+  --blue-t:#1a2d3d;--blue-text:#70b8f0;
+}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;display:flex;flex-direction:column}
 
-  /* 로그인 화면 */
-  .login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:1rem}
-  .login-box{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:2.5rem 2rem;width:100%;max-width:380px;text-align:center}
-  .login-logo{font-size:22px;font-weight:700;letter-spacing:1px;margin-bottom:4px}
-  .login-logo span{color:var(--purple2)}
-  .login-sub{font-size:12px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:2rem}
-  .login-divider{display:flex;align-items:center;gap:10px;margin:1rem 0;color:var(--text3);font-size:12px}
-  .login-divider::before,.login-divider::after{content:'';flex:1;height:1px;background:var(--border)}
-  .btn-google{width:100%;height:42px;border:1px solid var(--border2);border-radius:8px;background:var(--bg3);color:var(--text);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .15s;margin-bottom:1rem}
-  .btn-google:hover{border-color:var(--purple);background:var(--bg2)}
-  .google-icon{width:18px;height:18px}
-  .field{display:flex;flex-direction:column;gap:5px;margin-bottom:10px;text-align:left}
-  label{font-size:12px;color:var(--text3)}
-  input{height:40px;padding:0 12px;border:1px solid var(--border2);border-radius:8px;background:var(--bg3);color:var(--text);font-size:14px;outline:none;transition:border .15s;width:100%}
-  input:focus{border-color:var(--purple)}
-  input::placeholder{color:var(--text3)}
-  .btn-primary{width:100%;height:42px;background:var(--purple3);color:#fff;border:1px solid var(--purple);border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;transition:all .15s;margin-top:4px}
-  .btn-primary:hover{background:var(--purple)}
-  .login-toggle{font-size:12px;color:var(--text3);margin-top:1rem;cursor:pointer}
-  .login-toggle span{color:var(--purple2);text-decoration:underline}
-  .login-error{font-size:12px;color:var(--red-text);margin-top:8px;min-height:18px}
+/* ── 로그인 ── */
+.login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh}
+.login-box{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:2.25rem 2rem;width:340px;text-align:center}
+.login-logo{font-size:20px;font-weight:700;letter-spacing:1px;margin-bottom:3px}.login-logo span{color:var(--purple2)}
+.login-sub{font-size:11px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:1.75rem}
+.btn-google{width:100%;height:42px;border:1px solid var(--border2);border-radius:8px;background:var(--bg3);color:var(--text);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:.75rem;transition:border .15s}
+.btn-google:hover{border-color:var(--purple)}
+.divider{display:flex;align-items:center;gap:8px;color:var(--text3);font-size:11px;margin:.5rem 0}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.lfi{display:flex;flex-direction:column;gap:4px;margin-bottom:8px;text-align:left}
+.lfi label{font-size:11px;color:var(--text3)}
+.lfi input{height:38px;padding:0 10px;border:1px solid var(--border2);border-radius:7px;background:var(--bg3);color:var(--text);font-size:13px;outline:none;width:100%}
+.lfi input:focus{border-color:var(--purple)}
+.lfi input::placeholder{color:var(--text3)}
+.btn-login{width:100%;height:42px;background:var(--purple3);color:#fff;border:1px solid var(--purple);border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;margin-top:6px;transition:background .15s}
+.btn-login:hover{background:var(--purple)}
+.login-err{font-size:11px;color:var(--red-text);min-height:16px;margin-top:6px}
+.login-toggle{font-size:12px;color:var(--text3);margin-top:.75rem;cursor:pointer}
+.login-toggle span{color:var(--purple2);text-decoration:underline}
 
-  /* 메인 앱 */
-  .app{display:none}
-  .header{background:var(--bg2);border-bottom:1px solid var(--border);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between}
-  .logo{font-size:18px;font-weight:700;letter-spacing:1px}
-  .logo span{color:var(--purple2)}
-  .header-sub{font-size:12px;color:var(--text3);letter-spacing:2px;text-transform:uppercase}
-  .header-right{display:flex;align-items:center;gap:12px}
-  .user-info{font-size:12px;color:var(--text2)}
-  .container{max-width:1100px;margin:0 auto;padding:1.5rem 2rem}
-  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:1.5rem}
-  .stat{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem}
-  .stat-num{font-size:26px;font-weight:700;margin-bottom:2px}
-  .stat-label{font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:1px}
-  .tabs{display:flex;gap:4px;margin-bottom:1.25rem;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:5px}
-  .tab{flex:1;padding:8px 16px;font-size:13px;font-weight:500;cursor:pointer;border:none;background:none;color:var(--text2);border-radius:7px;transition:all .15s}
-  .tab:hover{color:var(--text);background:var(--bg3)}
-  .tab.active{color:#fff;background:var(--purple3);border:1px solid var(--purple)}
-  .section{display:none}.section.active{display:block}
-  .card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:1.25rem;margin-bottom:1rem}
-  .card-title{font-size:13px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:1px;margin-bottom:1rem}
-  .row{display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap}
-  .field-inline{display:flex;flex-direction:column;gap:5px;flex:1;min-width:110px}
-  .field-inline label{font-size:12px;color:var(--text3)}
-  .field-inline input,.field-inline select{height:36px;padding:0 10px;border:1px solid var(--border2);border-radius:7px;background:var(--bg3);color:var(--text);font-size:13px;outline:none;transition:border .15s}
-  .field-inline input:focus,.field-inline select:focus{border-color:var(--purple)}
-  select option{background:var(--bg3)}
-  button.btn{height:36px;padding:0 14px;border:1px solid var(--border2);border-radius:7px;background:var(--bg3);color:var(--text);font-size:13px;cursor:pointer;transition:all .15s;white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
-  button.btn:hover{border-color:var(--purple);color:var(--purple2)}
-  button.btn.primary{background:var(--purple3);color:#fff;border-color:var(--purple)}
-  button.btn.primary:hover{background:var(--purple)}
-  button.btn.danger:hover{border-color:var(--red-text);color:var(--red-text)}
-  button.btn:disabled{opacity:.35;cursor:not-allowed;pointer-events:none}
-  table{width:100%;border-collapse:collapse;font-size:13px}
-  th{text-align:left;padding:10px 12px;color:var(--text3);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border)}
-  td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
-  tr:last-child td{border-bottom:none}
-  tr:hover td{background:var(--bg3)}
-  .badge{display:inline-block;padding:3px 9px;border-radius:999px;font-size:11px;font-weight:600;letter-spacing:.3px;cursor:default}
-  .bg{background:var(--green-t);color:var(--green-text)}
-  .ba{background:var(--amber-t);color:var(--amber-text)}
-  .br{background:var(--red-t);color:var(--red-text)}
-  .bb{background:var(--blue-t);color:var(--blue-text)}
-  .bp{background:var(--purple3);color:var(--purple2)}
-  .ticket-wrap{background:#e8e8e8;border-radius:10px;padding:3px;max-width:620px;margin:0 auto}
-  .ticket{display:flex;background:white;border-radius:8px;overflow:hidden;height:150px}
-  .tl{width:33%;background:#111;position:relative;overflow:hidden}
-  .tl-text{position:absolute;font-size:9px;color:#555;font-family:'Courier New',monospace;line-height:1.6;padding:8px;word-break:break-all;top:0;left:0;right:0;bottom:0;overflow:hidden}
-  .tm{flex:1;padding:14px 18px;display:flex;flex-direction:column;justify-content:space-between;background:#f2f2f2}
-  .tm-top{display:flex;justify-content:space-between;font-size:10px;font-weight:700;color:#555;letter-spacing:.5px;font-family:'Arial Black',sans-serif}
-  .tm-title{font-size:30px;font-weight:900;color:#111;line-height:1.05;font-family:'Arial Black',sans-serif}
-  .tm-bottom{display:flex;gap:6px;flex-wrap:wrap}
-  .tpill{border:1.5px solid #222;border-radius:999px;padding:3px 11px;font-size:10px;font-weight:700;color:#222;font-family:'Arial Black',sans-serif}
-  .tr2{width:64px;background:#f2f2f2;border-left:2px dashed #bbb;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:8px 4px}
-  .barcode{width:26px;height:75px;background:repeating-linear-gradient(to right,#111 0,#111 1.5px,transparent 1.5px,transparent 3px)}
-  .tnum{font-size:7px;font-weight:700;color:#666;writing-mode:vertical-rl;letter-spacing:1.5px;font-family:'Courier New',monospace}
-  .tside{font-size:7px;font-weight:900;color:#111;writing-mode:vertical-rl;letter-spacing:2px;font-family:'Arial Black',sans-serif}
-  .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:100;align-items:center;justify-content:center}
-  .overlay.open{display:flex}
-  .modal{background:var(--bg2);border:1px solid var(--border2);border-radius:12px;padding:1.5rem;width:440px;max-width:90vw}
-  .modal-title{font-size:15px;font-weight:600;margin-bottom:1.25rem}
-  .modal-row{font-size:13px;line-height:2.2;border-top:1px solid var(--border);padding-top:1rem}
-  .modal-row .lbl{color:var(--text3)}
-  .modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:1.25rem}
-  .toast{position:fixed;bottom:24px;right:24px;background:var(--bg3);border:1px solid var(--purple);color:var(--purple2);padding:10px 18px;border-radius:8px;font-size:13px;font-weight:500;z-index:200;opacity:0;transform:translateY(10px);transition:all .2s;pointer-events:none}
-  .toast.show{opacity:1;transform:translateY(0)}
-  .empty{text-align:center;padding:2.5rem;color:var(--text3);font-size:13px}
+/* ── 앱 공통 ── */
+.app{display:none;flex-direction:column;min-height:100vh}
+.header{background:var(--bg2);border-bottom:1px solid var(--border);padding:.75rem 1.5rem;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.logo{font-size:16px;font-weight:700;letter-spacing:1px}.logo span{color:var(--purple2)}
+.hright{display:flex;align-items:center;gap:8px}
+.user-txt{font-size:12px;color:var(--text3)}
+.hbtn{height:28px;padding:0 10px;border:1px solid var(--border2);border-radius:6px;background:var(--bg3);color:var(--text2);font-size:11px;cursor:pointer;transition:all .15s}
+.hbtn:hover{border-color:var(--purple);color:var(--purple2)}
+
+/* ── 메인 탭 (관리 / POS) ── */
+.main-tabs{display:flex;background:var(--bg2);border-bottom:1px solid var(--border);flex-shrink:0}
+.main-tab{flex:1;padding:.7rem;font-size:13px;font-weight:600;cursor:pointer;border:none;background:none;color:var(--text3);border-bottom:2px solid transparent;transition:all .15s;letter-spacing:.5px}
+.main-tab:hover{color:var(--text)}
+.main-tab.active{color:var(--purple2);border-bottom-color:var(--purple)}
+.main-panel{display:none;flex:1}.main-panel.active{display:flex;flex-direction:column}
+
+/* ── 관리 패널 ── */
+.container{max-width:1100px;margin:0 auto;padding:1.5rem 2rem;width:100%}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:1.25rem}
+.stat{background:var(--bg2);border:1px solid var(--border);border-radius:9px;padding:.9rem 1rem}
+.stat-num{font-size:24px;font-weight:700;margin-bottom:2px}
+.stat-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:1px}
+.sub-tabs{display:flex;gap:4px;margin-bottom:1.1rem;background:var(--bg2);border:1px solid var(--border);border-radius:9px;padding:4px}
+.sub-tab{flex:1;padding:7px;font-size:12px;font-weight:500;cursor:pointer;border:none;background:none;color:var(--text2);border-radius:6px;transition:all .15s}
+.sub-tab:hover{color:var(--text);background:var(--bg3)}
+.sub-tab.active{color:#fff;background:var(--purple3);border:1px solid var(--purple)}
+.section{display:none}.section.active{display:block}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:9px;padding:1.1rem 1.25rem;margin-bottom:1rem}
+.card-title{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:.9rem}
+.row{display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap}
+.field{display:flex;flex-direction:column;gap:4px;flex:1;min-width:100px}
+.field label{font-size:11px;color:var(--text3)}
+.field input,.field select{height:36px;padding:0 10px;border:1px solid var(--border2);border-radius:7px;background:var(--bg3);color:var(--text);font-size:13px;outline:none;transition:border .15s}
+.field input:focus,.field select:focus{border-color:var(--purple)}
+.field input::placeholder{color:var(--text3)}
+select option{background:var(--bg3)}
+.btn{height:36px;padding:0 14px;border:1px solid var(--border2);border-radius:7px;background:var(--bg3);color:var(--text);font-size:13px;cursor:pointer;transition:all .15s;white-space:nowrap;display:inline-flex;align-items:center;gap:5px}
+.btn:hover{border-color:var(--purple);color:var(--purple2)}
+.btn.primary{background:var(--purple3);color:#fff;border-color:var(--purple)}
+.btn.primary:hover{background:var(--purple)}
+.btn.danger:hover{border-color:var(--red-text);color:var(--red-text)}
+.btn:disabled{opacity:.35;cursor:not-allowed;pointer-events:none}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:9px 12px;color:var(--text3);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border)}
+td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--bg3)}
+.badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600}
+.bg{background:var(--green-t);color:var(--green-text)}
+.ba{background:var(--amber-t);color:var(--amber-text)}
+.br{background:var(--red-t);color:var(--red-text)}
+.bb{background:var(--blue-t);color:var(--blue-text)}
+.bp{background:var(--purple3);color:var(--purple2)}
+.bs{background:#1a2d1a;color:var(--green-text)}
+.empty{text-align:center;padding:2.5rem;color:var(--text3);font-size:13px}
+
+/* 티켓 미리보기 */
+.ticket-wrap{background:#e8e8e8;border-radius:9px;padding:3px;max-width:600px;margin:0 auto}
+.ticket{display:flex;background:white;border-radius:7px;overflow:hidden;height:148px}
+.tl{width:33%;background:#111;position:relative;overflow:hidden}
+.tl-text{position:absolute;font-size:9px;color:#555;font-family:'Courier New',monospace;line-height:1.6;padding:8px;word-break:break-all;top:0;left:0;right:0;bottom:0;overflow:hidden}
+.tm{flex:1;padding:13px 16px;display:flex;flex-direction:column;justify-content:space-between;background:#f2f2f2}
+.tm-top{display:flex;justify-content:space-between;font-size:10px;font-weight:700;color:#555;letter-spacing:.5px;font-family:'Arial Black',sans-serif}
+.tm-title{font-size:28px;font-weight:900;color:#111;line-height:1.05;font-family:'Arial Black',sans-serif}
+.tm-bottom{display:flex;gap:6px;flex-wrap:wrap}
+.tpill{border:1.5px solid #222;border-radius:999px;padding:3px 10px;font-size:10px;font-weight:700;color:#222;font-family:'Arial Black',sans-serif}
+.tr2{width:62px;background:#f2f2f2;border-left:2px dashed #bbb;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:8px 4px}
+.barcode{width:24px;height:72px;background:repeating-linear-gradient(to right,#111 0,#111 1.5px,transparent 1.5px,transparent 3px)}
+.tnum{font-size:7px;font-weight:700;color:#666;writing-mode:vertical-rl;letter-spacing:1.5px;font-family:'Courier New',monospace}
+.tside{font-size:7px;font-weight:900;color:#111;writing-mode:vertical-rl;letter-spacing:2px;font-family:'Arial Black',sans-serif}
+
+/* 발행 모달 */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:100;align-items:center;justify-content:center}
+.overlay.open{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:12px;padding:1.5rem;width:420px;max-width:90vw}
+.modal-title{font-size:15px;font-weight:600;margin-bottom:1.1rem}
+.modal-body{font-size:13px;line-height:2.2;border-top:1px solid var(--border);padding-top:1rem}
+.modal-body .lbl{color:var(--text3)}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:1.1rem}
+
+/* ── POS 패널 ── */
+.pos{display:flex;flex:1;overflow:hidden}
+.pos-left{width:340px;min-width:340px;border-right:1px solid var(--border);display:flex;flex-direction:column;background:var(--bg2);overflow-y:auto}
+.sec-label{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px;padding:.85rem 1rem .4rem}
+.grade-tabs{display:flex;gap:5px;padding:0 1rem .7rem}
+.gtab{flex:1;padding:7px 0;border:1px solid var(--border2);border-radius:7px;background:var(--bg3);color:var(--text2);font-size:12px;font-weight:600;cursor:pointer;text-align:center;transition:all .15s}
+.gtab:hover{border-color:var(--purple);color:var(--purple2)}
+.gtab.active{background:var(--purple3);border-color:var(--purple);color:#fff}
+.grade-list-pos{display:flex;flex-direction:column;gap:6px;padding:0 1rem .5rem}
+.grade-btn{padding:.6rem 1rem;border:1px solid var(--border2);border-radius:8px;background:var(--bg3);color:var(--text);font-size:13px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:all .15s;width:100%;text-align:left}
+.grade-btn:hover{border-color:var(--purple)}
+.grade-btn.selected{border-color:var(--purple);background:var(--purple3)}
+.grade-btn.selected .gp{color:rgba(255,255,255,.6)}
+.gp{font-size:12px;color:var(--text2)}
+.special-box{margin:0 1rem .7rem;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:.75rem}
+.special-box label{font-size:11px;color:var(--text3);display:block;margin-bottom:5px}
+.sp-input{width:100%;height:36px;padding:0 10px;border:1px solid var(--border2);border-radius:6px;background:var(--bg4);color:var(--text);font-size:13px;outline:none}
+.sp-input:focus{border-color:var(--purple)}
+.sp-input::placeholder{color:var(--text3)}
+.sp-apply{width:100%;height:34px;margin-top:6px;border:1px solid var(--border2);border-radius:6px;background:var(--bg4);color:var(--text2);font-size:12px;cursor:pointer;transition:all .15s}
+.sp-apply:hover{border-color:var(--purple);color:var(--purple2)}
+.amount-wrap{margin:0 1rem .5rem;background:var(--bg);border:1px solid var(--border2);border-radius:9px;overflow:hidden}
+.amount-tag{padding:.4rem .85rem;font-size:11px;font-weight:700;color:var(--purple2);background:var(--purple3);letter-spacing:.5px}
+.amount-tag.sp{background:#1a2d1a;color:var(--green-text)}
+.amount-tag.none{background:var(--bg3);color:var(--text3)}
+.amount-display{font-size:36px;font-weight:700;letter-spacing:2px;padding:.6rem 1rem .7rem;text-align:right;min-height:60px;display:flex;align-items:center;justify-content:flex-end}
+.amount-display.zero{color:var(--text3)}
+.amount-display.adj{color:var(--amber-text)}
+.amount-display.ok{color:var(--text)}
+.keypad{padding:.5rem 1rem 1rem;display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.key{height:54px;border:1px solid var(--border2);border-radius:9px;background:var(--bg3);color:var(--text);font-size:20px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .1s;user-select:none}
+.key:hover{background:var(--bg4)}
+.key:active{transform:scale(.95)}
+.key.wide{grid-column:span 2}
+.key.del{color:var(--text2);font-size:16px}
+.key.clr{color:var(--red-text);border-color:var(--red-t);background:#150808;font-size:13px;font-weight:700}
+.key.go{grid-column:span 3;height:56px;background:var(--purple3);color:#fff;border-color:var(--purple);font-size:15px;font-weight:700;border-radius:10px}
+.key.go:hover{background:var(--purple)}
+.pos-right{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.buyer-form{padding:1rem 1.5rem;background:var(--bg2);border-bottom:1px solid var(--border);flex-shrink:0}
+.form-row{display:flex;gap:8px}
+.ff{display:flex;flex-direction:column;gap:4px;flex:1}
+.ff label{font-size:11px;color:var(--text3)}
+.ff input{height:40px;padding:0 12px;border:1px solid var(--border2);border-radius:7px;background:var(--bg3);color:var(--text);font-size:14px;outline:none;width:100%}
+.ff input:focus{border-color:var(--purple)}
+.ff input::placeholder{color:var(--text3)}
+.history{flex:1;overflow-y:auto;padding:1rem 1.5rem}
+.history-hd{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:.75rem;display:flex;justify-content:space-between;align-items:center}
+.today-total{color:var(--green-text);font-size:12px}
+.ticket-item{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:.7rem 1rem;margin-bottom:7px;display:flex;align-items:center;justify-content:space-between}
+.ti-name{font-size:14px;font-weight:600}
+.ti-meta{font-size:11px;color:var(--text3);margin-top:2px}
+.ti-num{font-size:12px;color:var(--purple2);font-weight:700;letter-spacing:1px;text-align:right}
+.ti-amt{font-size:13px;font-weight:600;color:var(--green-text);text-align:right}
+
+/* 결과 모달 */
+.result-modal{background:var(--bg2);border:1px solid var(--purple);border-radius:16px;padding:2rem 1.75rem;width:340px;text-align:center}
+.r-icon{font-size:52px;margin-bottom:.5rem}
+.r-title{font-size:20px;font-weight:700;margin-bottom:.5rem}
+.r-sub{font-size:13px;color:var(--text2);margin-bottom:1.25rem;line-height:1.8}
+.r-ticket{background:var(--bg3);border:1px solid var(--purple);border-radius:8px;padding:.75rem;margin-bottom:1.5rem;font-size:18px;font-weight:700;color:var(--purple2);letter-spacing:3px}
+.r-btn{width:100%;height:46px;background:var(--purple3);color:#fff;border:1px solid var(--purple);border-radius:9px;font-size:14px;font-weight:700;cursor:pointer;transition:background .15s}
+.r-btn:hover{background:var(--purple)}
+
+.toast{position:fixed;bottom:20px;right:20px;background:var(--bg3);border:1px solid var(--purple);color:var(--purple2);padding:10px 16px;border-radius:8px;font-size:13px;font-weight:500;z-index:300;opacity:0;transform:translateY(8px);transition:all .2s;pointer-events:none}
+.toast.show{opacity:1;transform:translateY(0)}
 </style>
 </head>
 <body>
 
-<!-- 로그인 화면 -->
+<!-- 로그인 -->
 <div class="login-screen" id="login-screen">
   <div class="login-box">
     <div class="login-logo">WEB <span>MAKER</span></div>
-    <div class="login-sub">Ticket Management</div>
-
+    <div class="login-sub">Ticket System</div>
     <button class="btn-google" onclick="loginGoogle()">
-      <svg class="google-icon" viewBox="0 0 24 24">
+      <svg width="16" height="16" viewBox="0 0 24 24">
         <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
         <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/>
+        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/>
         <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
       </svg>
       Google로 로그인
     </button>
-
-    <div class="login-divider">또는</div>
-
-    <div id="login-form">
-      <div class="field"><label>이메일</label><input id="l-email" type="email" placeholder="admin@example.com"></div>
-      <div class="field"><label>비밀번호</label><input id="l-pw" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')submitAuth()"></div>
-      <div class="login-error" id="login-error"></div>
-      <button class="btn-primary" onclick="submitAuth()" id="auth-btn">로그인</button>
-      <div class="login-toggle">계정이 없으신가요? <span onclick="toggleMode()">회원가입</span></div>
-    </div>
+    <div class="divider">또는</div>
+    <div class="lfi"><label>이메일</label><input id="l-email" type="email" placeholder="admin@example.com"></div>
+    <div class="lfi"><label>비밀번호</label><input id="l-pw" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')submitAuth()"></div>
+    <div class="login-err" id="login-err"></div>
+    <button class="btn-login" id="auth-btn" onclick="submitAuth()">로그인</button>
+    <div class="login-toggle">계정이 없으신가요? <span onclick="toggleMode()">회원가입</span></div>
   </div>
 </div>
 
-<!-- 메인 앱 -->
+<!-- 앱 -->
 <div class="app" id="app">
   <div class="header">
-    <div>
-      <div class="logo">WEB <span>MAKER</span></div>
-      <div class="header-sub">Ticket Management System</div>
-    </div>
-    <div class="header-right">
-      <span class="user-info" id="user-info"></span>
-      <button class="btn" onclick="logout()" style="height:30px;font-size:12px;padding:0 10px">로그아웃</button>
+    <div class="logo">WEB <span>MAKER</span></div>
+    <div class="hright">
+      <span class="user-txt" id="user-txt"></span>
+      <button class="hbtn" onclick="doLogout()">로그아웃</button>
     </div>
   </div>
 
-  <div class="container">
-    <div class="stats" id="stats"></div>
+  <!-- 메인 탭 -->
+  <div class="main-tabs">
+    <button class="main-tab active" onclick="switchMain('admin')">📋 관리</button>
+    <button class="main-tab" onclick="switchMain('pos')">🖥 현장 결제 POS</button>
+  </div>
 
-    <div class="tabs">
-      <button class="tab active" onclick="switchTab('buyers')">구매자 관리</button>
-      <button class="tab" onclick="switchTab('grades')">등급 설정</button>
-      <button class="tab" onclick="switchTab('preview')">티켓 미리보기</button>
-    </div>
+  <!-- 관리 패널 -->
+  <div class="main-panel active" id="panel-admin" style="overflow-y:auto">
+    <div class="container">
+      <div class="stats" id="stats"></div>
+      <div class="sub-tabs">
+        <button class="sub-tab active" onclick="switchSub('buyers')">구매자 관리</button>
+        <button class="sub-tab" onclick="switchSub('grades')">등급 설정</button>
+        <button class="sub-tab" onclick="switchSub('preview')">티켓 미리보기</button>
+      </div>
 
-    <div class="section active" id="sec-buyers">
-      <div class="card">
-        <div class="card-title">구매자 등록</div>
-        <div class="row">
-          <div class="field-inline"><label>이름</label><input id="b-name" placeholder="홍길동"></div>
-          <div class="field-inline"><label>연락처</label><input id="b-phone" placeholder="010-0000-0000"></div>
-          <div class="field-inline"><label>등급</label><select id="b-grade"></select></div>
-          <div class="field-inline"><label>결제</label>
-            <select id="b-pay">
-              <option value="미결제">미결제</option>
-              <option value="결제완료">결제완료</option>
-            </select>
+      <!-- 구매자 -->
+      <div class="section active" id="sec-buyers">
+        <div class="card">
+          <div class="card-title">구매자 등록</div>
+          <div class="row">
+            <div class="field"><label>이름</label><input id="b-name" placeholder="홍길동"></div>
+            <div class="field"><label>연락처</label><input id="b-phone" placeholder="010-0000-0000"></div>
+            <div class="field"><label>등급</label><select id="b-grade"></select></div>
+            <div class="field"><label>결제</label>
+              <select id="b-pay"><option value="미결제">미결제</option><option value="결제완료">결제완료</option></select>
+            </div>
+            <div class="field" style="flex:0;min-width:90px"><label>메모</label><input id="b-memo" placeholder="선택" style="width:110px"></div>
+            <button class="btn primary" onclick="addBuyer()">+ 추가</button>
           </div>
-          <div class="field-inline" style="flex:0"><label>메모</label><input id="b-memo" placeholder="선택사항" style="width:130px"></div>
-          <button class="btn primary" onclick="addBuyer()">+ 추가</button>
+        </div>
+        <div class="card" style="padding:0">
+          <table>
+            <thead><tr><th>#</th><th>이름</th><th>연락처</th><th>등급</th><th>결제</th><th>티켓</th><th>메모</th><th></th></tr></thead>
+            <tbody id="buyer-list"><tr><td colspan="8" class="empty">구매자를 등록하세요</td></tr></tbody>
+          </table>
         </div>
       </div>
-      <div class="card" style="padding:0">
-        <table>
-          <thead><tr><th>#</th><th>이름</th><th>연락처</th><th>등급</th><th>결제</th><th>티켓</th><th>메모</th><th></th></tr></thead>
-          <tbody id="buyer-list"><tr><td colspan="8" class="empty">구매자를 등록하세요</td></tr></tbody>
-        </table>
-      </div>
-    </div>
 
-    <div class="section" id="sec-grades">
-      <div class="card">
-        <div class="card-title">등급 추가</div>
-        <div class="row">
-          <div class="field-inline"><label>등급명</label><input id="g-name" placeholder="VIP"></div>
-          <div class="field-inline"><label>가격 (원)</label><input id="g-price" type="number" placeholder="50000"></div>
-          <div class="field-inline"><label>발행 수량</label><input id="g-qty" type="number" placeholder="100"></div>
-          <button class="btn primary" onclick="addGrade()">+ 등급 추가</button>
+      <!-- 등급 -->
+      <div class="section" id="sec-grades">
+        <div class="card">
+          <div class="card-title">등급 추가</div>
+          <div class="row">
+            <div class="field"><label>등급명</label><input id="g-name" placeholder="VIP"></div>
+            <div class="field"><label>가격 (원)</label><input id="g-price" type="number" placeholder="50000"></div>
+            <div class="field"><label>발행 수량</label><input id="g-qty" type="number" placeholder="100"></div>
+            <button class="btn primary" onclick="addGrade()">+ 추가</button>
+          </div>
+        </div>
+        <div class="card" style="padding:0">
+          <table>
+            <thead><tr><th>등급명</th><th>가격</th><th>수량</th><th>발행됨</th><th>잔여</th><th></th></tr></thead>
+            <tbody id="grade-list"><tr><td colspan="6" class="empty">등급을 추가하세요</td></tr></tbody>
+          </table>
         </div>
       </div>
-      <div class="card" style="padding:0">
-        <table>
-          <thead><tr><th>등급명</th><th>가격</th><th>수량</th><th>발행됨</th><th>잔여</th><th></th></tr></thead>
-          <tbody id="grade-list"><tr><td colspan="6" class="empty">등급을 추가하세요</td></tr></tbody>
-        </table>
-      </div>
-    </div>
 
-    <div class="section" id="sec-preview">
-      <div class="card">
-        <div class="row">
-          <div class="field-inline"><label>구매자 선택</label><select id="preview-buyer" onchange="renderPreview()"></select></div>
-          <button class="btn" onclick="printTicket()">🖨 인쇄</button>
+      <!-- 미리보기 -->
+      <div class="section" id="sec-preview">
+        <div class="card">
+          <div class="row">
+            <div class="field"><label>구매자 선택</label><select id="preview-buyer" onchange="renderPreview()"></select></div>
+            <button class="btn" onclick="printTicket()">🖨 인쇄</button>
+          </div>
         </div>
-      </div>
-      <div class="ticket-wrap" id="ticket-wrap">
-        <div class="ticket">
-          <div class="tl"><div class="tl-text" id="bg-text"></div></div>
-          <div class="tm">
-            <div class="tm-top"><span>LIVE MAKE</span><span>Dowon, Daegu</span></div>
-            <div class="tm-title">Web<br>Maker</div>
-            <div class="tm-bottom">
-              <div class="tpill" id="pv-grade">—</div>
-              <div class="tpill" id="pv-lv">LV: —</div>
-              <div class="tpill" id="pv-price">PRICE: —</div>
+        <div class="ticket-wrap" id="ticket-wrap">
+          <div class="ticket">
+            <div class="tl"><div class="tl-text" id="bg-text"></div></div>
+            <div class="tm">
+              <div class="tm-top"><span>LIVE MAKE</span><span>Dowon, Daegu</span></div>
+              <div class="tm-title">Web<br>Maker</div>
+              <div class="tm-bottom">
+                <div class="tpill" id="pv-grade">—</div>
+                <div class="tpill" id="pv-lv">LV: —</div>
+                <div class="tpill" id="pv-price">PRICE: —</div>
+              </div>
+            </div>
+            <div class="tr2">
+              <div class="tside" id="pv-side">—</div>
+              <div class="barcode"></div>
+              <div class="tnum" id="pv-num">TICKET NUMBER: —</div>
             </div>
           </div>
-          <div class="tr2">
-            <div class="tside" id="pv-side">배거너</div>
-            <div class="barcode"></div>
-            <div class="tnum" id="pv-num">TICKET NUMBER: —</div>
+        </div>
+        <div style="margin-top:.75rem;text-align:center;font-size:12px;color:var(--text3)">흑백 프린터 최적화</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- POS 패널 -->
+  <div class="main-panel" id="panel-pos">
+    <div class="pos">
+      <!-- 왼쪽 -->
+      <div class="pos-left">
+        <div class="sec-label">등급</div>
+        <div class="grade-tabs">
+          <button class="gtab active" id="gtab-existing" onclick="switchGradeTab('existing')">기존 등급</button>
+          <button class="gtab" id="gtab-special" onclick="switchGradeTab('special')">특별 등급</button>
+        </div>
+        <div id="pos-panel-existing">
+          <div class="grade-list-pos" id="pos-grade-list"></div>
+        </div>
+        <div id="pos-panel-special" style="display:none">
+          <div class="special-box">
+            <label>특별 등급명</label>
+            <input class="sp-input" id="sp-name" placeholder="예: 관계자, 스태프, 초대권...">
+            <button class="sp-apply" onclick="applySpecial()">이 등급으로 선택</button>
           </div>
         </div>
+        <div class="amount-wrap">
+          <div class="amount-tag none" id="pos-grade-tag">등급 미선택</div>
+          <div class="amount-display zero" id="pos-amount">0</div>
+        </div>
+        <div class="keypad">
+          <button class="key" onclick="kp('1')">1</button>
+          <button class="key" onclick="kp('2')">2</button>
+          <button class="key" onclick="kp('3')">3</button>
+          <button class="key" onclick="kp('4')">4</button>
+          <button class="key" onclick="kp('5')">5</button>
+          <button class="key" onclick="kp('6')">6</button>
+          <button class="key" onclick="kp('7')">7</button>
+          <button class="key" onclick="kp('8')">8</button>
+          <button class="key" onclick="kp('9')">9</button>
+          <button class="key clr" onclick="kpClear()">CLR</button>
+          <button class="key wide" onclick="kp('0')">0</button>
+          <button class="key del" onclick="kpDel()">⌫</button>
+          <button class="key go" onclick="doConfirm()">결제 확정 →</button>
+        </div>
       </div>
-      <div style="margin-top:1rem;text-align:center;font-size:12px;color:var(--text3)">흑백 프린터 최적화</div>
+      <!-- 오른쪽 -->
+      <div class="pos-right">
+        <div class="buyer-form">
+          <div class="sec-label" style="padding:.2rem 0 .5rem">구매자 정보</div>
+          <div class="form-row">
+            <div class="ff"><label>이름 *</label><input id="pos-name" placeholder="홍길동" autocomplete="off"></div>
+            <div class="ff"><label>연락처</label><input id="pos-phone" placeholder="010-0000-0000" autocomplete="off"></div>
+            <div class="ff" style="max-width:90px"><label>메모</label><input id="pos-memo" placeholder="선택" autocomplete="off"></div>
+          </div>
+        </div>
+        <div class="history">
+          <div class="history-hd">
+            <span>오늘 발급 내역</span>
+            <span class="today-total" id="today-total"></span>
+          </div>
+          <div id="pos-history"><div class="empty" style="padding:2rem">아직 발급된 티켓이 없어요</div></div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- 발행 모달 -->
-<div class="overlay" id="modal">
+<!-- 발행 모달 (관리) -->
+<div class="overlay" id="issue-modal">
   <div class="modal">
     <div class="modal-title">티켓 발행 확인</div>
-    <div class="modal-row" id="modal-body"></div>
+    <div class="modal-body" id="issue-body"></div>
     <div class="modal-actions">
-      <button class="btn" onclick="closeModal()">취소</button>
+      <button class="btn" onclick="closeIssueModal()">취소</button>
       <button class="btn primary" onclick="issueTicket()">발행 확정</button>
     </div>
+  </div>
+</div>
+
+<!-- 결과 모달 (POS) -->
+<div class="overlay" id="result-overlay">
+  <div class="result-modal">
+    <div class="r-icon">🎟</div>
+    <div class="r-title" id="r-title">발급 완료!</div>
+    <div class="r-sub" id="r-sub"></div>
+    <div class="r-ticket" id="r-num"></div>
+    <button class="r-btn" onclick="closeResult()">확인 — 다음 고객</button>
   </div>
 </div>
 
@@ -263,23 +413,26 @@ const firebaseConfig = {
   projectId: "ticket-90eef",
   storageBucket: "ticket-90eef.firebasestorage.app",
   messagingSenderId: "203906369696",
-  appId: "1:203906369696:web:33cac97b77ec7f5bb761c5",
-  measurementId: "G-5WH0BY6FB6"
+  appId: "1:203906369696:web:33cac97b77ec7f5bb761c5"
 };
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase(app);
-const googleProvider = new GoogleAuthProvider();
+const gProvider = new GoogleAuthProvider();
 
-let grades = [], buyers = [], issuePending = null, isSignup = false;
+let grades = [], buyers = [];
+let issuePending = null;
+let posGrade = null, posInput = '';
+let isSignup = false;
+let gradeTab = 'existing';
 
-// ── Auth 상태 ─────────────────────────────────────
+// ── Auth ─────────────────────────────────────────
 onAuthStateChanged(auth, user => {
   if(user){
     document.getElementById('login-screen').style.display='none';
-    document.getElementById('app').style.display='block';
-    document.getElementById('user-info').textContent = user.displayName || user.email;
+    document.getElementById('app').style.display='flex';
+    document.getElementById('user-txt').textContent = user.displayName||user.email;
     initData();
   } else {
     document.getElementById('login-screen').style.display='flex';
@@ -287,81 +440,80 @@ onAuthStateChanged(auth, user => {
   }
 });
 
-// ── 로그인/회원가입 ───────────────────────────────
 window.submitAuth = async function(){
-  const email = document.getElementById('l-email').value.trim();
-  const pw = document.getElementById('l-pw').value;
-  const errEl = document.getElementById('login-error');
-  errEl.textContent='';
-  if(!email||!pw){errEl.textContent='이메일과 비밀번호를 입력하세요';return;}
+  const email=document.getElementById('l-email').value.trim();
+  const pw=document.getElementById('l-pw').value;
+  const err=document.getElementById('login-err');
+  err.textContent='';
+  if(!email||!pw){err.textContent='이메일과 비밀번호를 입력하세요';return;}
   try{
-    if(isSignup){
-      await createUserWithEmailAndPassword(auth,email,pw);
-    } else {
-      await signInWithEmailAndPassword(auth,email,pw);
-    }
+    if(isSignup) await createUserWithEmailAndPassword(auth,email,pw);
+    else await signInWithEmailAndPassword(auth,email,pw);
   } catch(e){
-    const msgs = {
-      'auth/user-not-found':'계정이 없습니다',
-      'auth/wrong-password':'비밀번호가 틀렸습니다',
-      'auth/email-already-in-use':'이미 사용 중인 이메일입니다',
-      'auth/weak-password':'비밀번호는 6자 이상이어야 합니다',
-      'auth/invalid-email':'유효하지 않은 이메일입니다',
-      'auth/invalid-credential':'이메일 또는 비밀번호가 틀렸습니다',
-    };
-    errEl.textContent = msgs[e.code] || e.message;
+    const m={'auth/user-not-found':'계정이 없습니다','auth/wrong-password':'비밀번호 오류',
+      'auth/email-already-in-use':'이미 사용 중인 이메일','auth/weak-password':'비밀번호 6자 이상',
+      'auth/invalid-email':'유효하지 않은 이메일','auth/invalid-credential':'이메일 또는 비밀번호 오류'};
+    err.textContent=m[e.code]||e.message;
   }
 };
-
 window.loginGoogle = async function(){
-  try{ await signInWithPopup(auth, googleProvider); }
-  catch(e){ document.getElementById('login-error').textContent = e.message; }
+  try{ await signInWithPopup(auth,gProvider); }
+  catch(e){ document.getElementById('login-err').textContent=e.message; }
 };
-
-window.logout = function(){ signOut(auth); };
-
+window.doLogout = ()=>signOut(auth);
 window.toggleMode = function(){
-  isSignup = !isSignup;
-  document.getElementById('auth-btn').textContent = isSignup ? '회원가입' : '로그인';
-  document.querySelector('.login-toggle').innerHTML = isSignup
-    ? '계정이 있으신가요? <span onclick="toggleMode()">로그인</span>'
-    : '계정이 없으신가요? <span onclick="toggleMode()">회원가입</span>';
-  document.getElementById('login-error').textContent='';
+  isSignup=!isSignup;
+  document.getElementById('auth-btn').textContent=isSignup?'회원가입':'로그인';
+  document.querySelector('.login-toggle').innerHTML=isSignup
+    ?'계정이 있으신가요? <span onclick="toggleMode()">로그인</span>'
+    :'계정이 없으신가요? <span onclick="toggleMode()">회원가입</span>';
+  document.getElementById('login-err').textContent='';
 };
 
-// ── 데이터 초기화 ─────────────────────────────────
+// ── 데이터 ────────────────────────────────────────
 function initData(){
-  onValue(ref(db,'grades'), snap => {
+  onValue(ref(db,'grades'), snap=>{
     grades=[];
     snap.forEach(c=>grades.push({id:c.key,...c.val()}));
-    renderGrades(); renderGradeSelect();
+    renderGradeList(); renderGradeSelect(); renderPosGrades();
   });
-  onValue(ref(db,'buyers'), snap => {
+  onValue(ref(db,'buyers'), snap=>{
     buyers=[];
     snap.forEach(c=>buyers.push({id:c.key,...c.val()}));
-    renderBuyers(); renderStats(); renderGrades();
+    renderBuyers(); renderStats(); renderGradeList(); renderPosHistory();
   });
-  // 배경 텍스트
   const words='perceptibly pernicious prematurely privately purpose quick-witted randomly reverently rigid rigorously scrupulously sensationally sensibly smoothly soberly somewhat spasmodically structurally stupendously sympathetically swaggeringly tirelessly touchingly'.split(' ');
   document.getElementById('bg-text').textContent=Array(80).fill(0).map(()=>words[Math.floor(Math.random()*words.length)]).join('; ');
 }
 
-// ── 등급 ─────────────────────────────────────────
+// ── 메인 탭 ──────────────────────────────────────
+window.switchMain = function(t){
+  document.querySelectorAll('.main-tab').forEach((b,i)=>b.classList.toggle('active',['admin','pos'][i]===t));
+  document.getElementById('panel-admin').classList.toggle('active',t==='admin');
+  document.getElementById('panel-pos').classList.toggle('active',t==='pos');
+};
+
+// ── 관리: 서브탭 ─────────────────────────────────
+window.switchSub = function(t){
+  document.querySelectorAll('.sub-tab').forEach((b,i)=>b.classList.toggle('active',['buyers','grades','preview'][i]===t));
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('sec-'+t).classList.add('active');
+  if(t==='preview')populatePreviewSelect();
+};
+
+// ── 관리: 등급 ───────────────────────────────────
 window.addGrade = function(){
   const n=document.getElementById('g-name').value.trim();
   const p=parseInt(document.getElementById('g-price').value)||0;
   const q=parseInt(document.getElementById('g-qty').value)||0;
   if(!n){showToast('등급명을 입력하세요');return;}
   push(ref(db,'grades'),{name:n,price:p,qty:q});
-  document.getElementById('g-name').value='';
-  document.getElementById('g-price').value='';
-  document.getElementById('g-qty').value='';
+  ['g-name','g-price','g-qty'].forEach(id=>document.getElementById(id).value='');
   showToast('등급 추가됨');
 };
+window.deleteGrade = id=>remove(ref(db,`grades/${id}`));
 
-window.deleteGrade = function(id){ remove(ref(db,`grades/${id}`)); };
-
-function renderGrades(){
+function renderGradeList(){
   const tb=document.getElementById('grade-list');
   if(!grades.length){tb.innerHTML='<tr><td colspan="6" class="empty">등급을 추가하세요</td></tr>';return;}
   tb.innerHTML=grades.map(g=>{
@@ -377,12 +529,11 @@ function renderGrades(){
     </tr>`;
   }).join('');
 }
-
 function renderGradeSelect(){
   document.getElementById('b-grade').innerHTML=grades.map(g=>`<option>${g.name}</option>`).join('');
 }
 
-// ── 구매자 ────────────────────────────────────────
+// ── 관리: 구매자 ─────────────────────────────────
 window.addBuyer = function(){
   const n=document.getElementById('b-name').value.trim();
   const p=document.getElementById('b-phone').value.trim();
@@ -391,44 +542,36 @@ window.addBuyer = function(){
   const memo=document.getElementById('b-memo').value.trim();
   if(!n||!p){showToast('이름과 연락처를 입력하세요');return;}
   push(ref(db,'buyers'),{name:n,phone:p,grade:g,pay,memo:memo||'',ticket:null,createdAt:Date.now()});
-  document.getElementById('b-name').value='';
-  document.getElementById('b-phone').value='';
-  document.getElementById('b-memo').value='';
+  ['b-name','b-phone','b-memo'].forEach(id=>document.getElementById(id).value='');
   showToast('구매자 등록됨');
 };
-
-window.deleteBuyer = function(id){ remove(ref(db,`buyers/${id}`)); };
-
-window.togglePay = function(id,cur){
-  update(ref(db,`buyers/${id}`),{pay:cur==='결제완료'?'미결제':'결제완료'});
-};
+window.deleteBuyer = id=>remove(ref(db,`buyers/${id}`));
+window.togglePay = (id,cur)=>update(ref(db,`buyers/${id}`),{pay:cur==='결제완료'?'미결제':'결제완료'});
 
 function renderBuyers(){
   const tb=document.getElementById('buyer-list');
   if(!buyers.length){tb.innerHTML='<tr><td colspan="8" class="empty">구매자를 등록하세요</td></tr>';return;}
   const sorted=[...buyers].sort((a,b)=>b.createdAt-a.createdAt);
-  tb.innerHTML=sorted.map((b,i)=>`
-    <tr>
-      <td style="color:var(--text3)">${sorted.length-i}</td>
-      <td style="font-weight:600">${b.name}</td>
-      <td style="color:var(--text2)">${b.phone}</td>
-      <td><span class="badge bb">${b.grade}</span></td>
-      <td><span class="badge ${b.pay==='결제완료'?'bg':'ba'}" style="cursor:pointer" onclick="togglePay('${b.id}','${b.pay}')" title="클릭해서 변경">${b.pay}</span></td>
-      <td>${b.ticket?`<span class="badge bg">#${b.ticket}</span>`:`<span class="badge ba">미발행</span>`}</td>
-      <td style="color:var(--text3);font-size:12px">${b.memo||'—'}</td>
-      <td style="display:flex;gap:4px">
-        <button class="btn" onclick="openIssue('${b.id}')" ${b.ticket?'disabled':''} style="height:28px;font-size:12px;padding:0 10px">발행</button>
-        <button class="btn danger" onclick="deleteBuyer('${b.id}')" style="height:28px;font-size:12px;padding:0 8px">✕</button>
-      </td>
-    </tr>`).join('');
+  tb.innerHTML=sorted.map((b,i)=>`<tr>
+    <td style="color:var(--text3)">${sorted.length-i}</td>
+    <td style="font-weight:600">${b.name}</td>
+    <td style="color:var(--text2)">${b.phone}</td>
+    <td><span class="badge bb">${b.grade}</span></td>
+    <td><span class="badge ${b.pay==='결제완료'?'bg':'ba'}" style="cursor:pointer" onclick="togglePay('${b.id}','${b.pay}')" title="클릭 시 변경">${b.pay}</span></td>
+    <td>${b.ticket?`<span class="badge bg">#${b.ticket}</span>`:`<span class="badge ba">미발행</span>`}</td>
+    <td style="color:var(--text3);font-size:12px">${b.memo||'—'}</td>
+    <td style="display:flex;gap:4px">
+      <button class="btn" onclick="openIssueModal('${b.id}')" ${b.ticket?'disabled':''} style="height:28px;font-size:12px;padding:0 10px">발행</button>
+      <button class="btn danger" onclick="deleteBuyer('${b.id}')" style="height:28px;font-size:12px;padding:0 8px">✕</button>
+    </td>
+  </tr>`).join('');
 }
 
 function renderStats(){
-  const total=buyers.length;
-  const paid=buyers.filter(b=>b.pay==='결제완료').length;
+  const total=buyers.length, paid=buyers.filter(b=>b.pay==='결제완료').length;
   const issued=buyers.filter(b=>b.ticket).length;
   const revenue=buyers.filter(b=>b.pay==='결제완료').reduce((s,b)=>{
-    const g=grades.find(x=>x.name===b.grade);return s+(g?g.price:0);},0);
+    const g=grades.find(x=>x.name===b.grade); return s+(g?g.price:b.paidAmount||0);},0);
   document.getElementById('stats').innerHTML=`
     <div class="stat"><div class="stat-num" style="color:var(--purple2)">${total}</div><div class="stat-label">총 구매자</div></div>
     <div class="stat"><div class="stat-num" style="color:var(--green-text)">${paid}</div><div class="stat-label">결제 완료</div></div>
@@ -437,46 +580,42 @@ function renderStats(){
     <div class="stat"><div class="stat-num" style="color:var(--green-text);font-size:18px">${revenue.toLocaleString()}원</div><div class="stat-label">결제 수익</div></div>`;
 }
 
-// ── 발행 ─────────────────────────────────────────
-window.openIssue = function(id){
+// ── 관리: 발행 모달 ──────────────────────────────
+window.openIssueModal = function(id){
   issuePending=id;
   const b=buyers.find(x=>x.id===id);
   const g=grades.find(x=>x.name===b.grade)||{price:0};
-  document.getElementById('modal-body').innerHTML=`
+  document.getElementById('issue-body').innerHTML=`
     <div><span class="lbl">이름:</span> <strong>${b.name}</strong></div>
     <div><span class="lbl">연락처:</span> ${b.phone}</div>
     <div><span class="lbl">등급:</span> <span class="badge bb">${b.grade}</span></div>
     <div><span class="lbl">가격:</span> <strong>${g.price.toLocaleString()}원</strong></div>
     <div><span class="lbl">결제:</span> <span class="badge ${b.pay==='결제완료'?'bg':'ba'}">${b.pay}</span></div>`;
-  document.getElementById('modal').classList.add('open');
+  document.getElementById('issue-modal').classList.add('open');
 };
-
-window.closeModal = function(){
-  document.getElementById('modal').classList.remove('open');
+window.closeIssueModal = function(){
+  document.getElementById('issue-modal').classList.remove('open');
   issuePending=null;
 };
-
 window.issueTicket = function(){
   if(!issuePending)return;
   const num='TK'+String(Date.now()).slice(-6);
   update(ref(db,`buyers/${issuePending}`),{ticket:num});
-  closeModal();
+  closeIssueModal();
   showToast('티켓 발행 완료: #'+num);
 };
 
-// ── 미리보기 ──────────────────────────────────────
+// ── 관리: 미리보기 ───────────────────────────────
 function populatePreviewSelect(){
   const sel=document.getElementById('preview-buyer');
-  const list=buyers.filter(b=>b.ticket).length ? buyers.filter(b=>b.ticket) : buyers;
+  const list=buyers.filter(b=>b.ticket).length?buyers.filter(b=>b.ticket):buyers;
   sel.innerHTML=list.map(b=>`<option value="${b.id}">${b.name} (${b.grade})${b.ticket?' #'+b.ticket:' — 미발행'}</option>`).join('');
   renderPreview();
 }
-
 window.renderPreview = function(){
   const id=document.getElementById('preview-buyer').value;
   if(!id)return;
-  const b=buyers.find(x=>x.id===id);
-  if(!b)return;
+  const b=buyers.find(x=>x.id===id); if(!b)return;
   const g=grades.find(x=>x.name===b.grade)||{price:0};
   const lv=grades.indexOf(g)+1;
   document.getElementById('pv-grade').textContent=b.grade;
@@ -485,32 +624,20 @@ window.renderPreview = function(){
   document.getElementById('pv-num').textContent='TICKET NUMBER: '+(b.ticket||'미발행');
   document.getElementById('pv-side').textContent=b.name.slice(0,3);
 };
-
-// ── 탭 ───────────────────────────────────────────
-window.switchTab = function(t){
-  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  const tabs=['buyers','grades','preview'];
-  document.querySelectorAll('.tab')[tabs.indexOf(t)].classList.add('active');
-  document.getElementById('sec-'+t).classList.add('active');
-  if(t==='preview')populatePreviewSelect();
-};
-
-// ── 인쇄 ─────────────────────────────────────────
 window.printTicket = function(){
   const wrap=document.getElementById('ticket-wrap');
   const w=window.open('','_blank','width=700,height=250');
   w.document.write(`<!DOCTYPE html><html><head><style>
     body{margin:20px;background:#fff}
-    .ticket{display:flex;height:150px;font-family:'Arial Black',sans-serif}
+    .ticket{display:flex;height:148px;font-family:'Arial Black',sans-serif}
     .tl{width:33%;background:#111}
-    .tm{flex:1;padding:14px 18px;display:flex;flex-direction:column;justify-content:space-between;background:#f2f2f2}
+    .tm{flex:1;padding:13px 16px;display:flex;flex-direction:column;justify-content:space-between;background:#f2f2f2}
     .tm-top{display:flex;justify-content:space-between;font-size:10px;font-weight:700;color:#555;letter-spacing:.5px}
-    .tm-title{font-size:30px;font-weight:900;color:#111;line-height:1.05}
+    .tm-title{font-size:28px;font-weight:900;color:#111;line-height:1.05}
     .tm-bottom{display:flex;gap:6px}
-    .tpill{border:1.5px solid #222;border-radius:999px;padding:3px 11px;font-size:10px;font-weight:700;color:#222}
-    .tr2{width:64px;background:#f2f2f2;border-left:2px dashed #bbb;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:8px 4px}
-    .barcode{width:26px;height:75px;background:repeating-linear-gradient(to right,#111 0,#111 1.5px,transparent 1.5px,transparent 3px)}
+    .tpill{border:1.5px solid #222;border-radius:999px;padding:3px 10px;font-size:10px;font-weight:700;color:#222}
+    .tr2{width:62px;background:#f2f2f2;border-left:2px dashed #bbb;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:8px 4px}
+    .barcode{width:24px;height:72px;background:repeating-linear-gradient(to right,#111 0,#111 1.5px,transparent 1.5px,transparent 3px)}
     .tnum{font-size:7px;font-weight:700;color:#666;writing-mode:vertical-rl;letter-spacing:1.5px}
     .tside{font-size:7px;font-weight:900;color:#111;writing-mode:vertical-rl;letter-spacing:2px}
   </style></head><body>${wrap.innerHTML}</body></html>`);
@@ -518,10 +645,125 @@ window.printTicket = function(){
   setTimeout(()=>w.print(),400);
 };
 
+// ── POS: 등급 탭 ─────────────────────────────────
+window.switchGradeTab = function(tab){
+  gradeTab=tab;
+  document.getElementById('gtab-existing').classList.toggle('active',tab==='existing');
+  document.getElementById('gtab-special').classList.toggle('active',tab==='special');
+  document.getElementById('pos-panel-existing').style.display=tab==='existing'?'block':'none';
+  document.getElementById('pos-panel-special').style.display=tab==='special'?'block':'none';
+  posGrade=null; posInput=''; updatePosDisplay();
+};
+
+function renderPosGrades(){
+  const el=document.getElementById('pos-grade-list');
+  if(!grades.length){el.innerHTML='<div style="color:var(--text3);font-size:12px;padding:0 0 .5rem">관리 탭에서 등급을 추가하세요</div>';return;}
+  el.innerHTML=grades.map(g=>`
+    <button class="grade-btn ${posGrade?.name===g.name&&!posGrade?.isSpecial?'selected':''}"
+            onclick="posSelectGrade('${g.id}')">
+      <span style="font-weight:600">${g.name}</span>
+      <span class="gp">${g.price.toLocaleString()}원</span>
+    </button>`).join('');
+}
+
+window.posSelectGrade = function(id){
+  const g=grades.find(x=>x.id===id);
+  posGrade={name:g.name,price:g.price,isSpecial:false};
+  posInput=String(g.price);
+  updatePosDisplay(); renderPosGrades();
+};
+
+window.applySpecial = function(){
+  const name=document.getElementById('sp-name').value.trim();
+  if(!name){showToast('등급명을 입력하세요');return;}
+  posGrade={name,price:0,isSpecial:true};
+  posInput=''; updatePosDisplay();
+  showToast(`"${name}" 등급 선택됨`);
+};
+
+// ── POS: 키패드 ──────────────────────────────────
+window.kp = function(v){
+  if(posInput.length>=8)return;
+  posInput = (posInput===''||posInput==='0')?v:posInput+v;
+  updatePosDisplay();
+};
+window.kpDel = function(){ posInput=posInput.slice(0,-1); updatePosDisplay(); };
+window.kpClear = function(){ posInput=''; posGrade=null; renderPosGrades(); updatePosDisplay(); };
+
+function updatePosDisplay(){
+  const tag=document.getElementById('pos-grade-tag');
+  const disp=document.getElementById('pos-amount');
+  const val=parseInt(posInput)||0;
+  if(!posGrade){
+    tag.textContent='등급 미선택'; tag.className='amount-tag none';
+  } else if(posGrade.isSpecial){
+    tag.textContent='⭐ '+posGrade.name; tag.className='amount-tag sp';
+  } else {
+    const adj=val!==posGrade.price;
+    tag.textContent=(adj?'✏ ':'')+posGrade.name; tag.className='amount-tag';
+  }
+  disp.textContent=val?val.toLocaleString():'0';
+  disp.className='amount-display '+(
+    !val?'zero':
+    posGrade&&!posGrade.isSpecial&&val!==posGrade.price?'adj':'ok'
+  );
+}
+
+// ── POS: 결제 확정 ───────────────────────────────
+window.doConfirm = async function(){
+  const name=document.getElementById('pos-name').value.trim();
+  const phone=document.getElementById('pos-phone').value.trim();
+  const memo=document.getElementById('pos-memo').value.trim();
+  const amount=parseInt(posInput)||0;
+  if(!name){showToast('이름을 입력하세요');document.getElementById('pos-name').focus();return;}
+  if(!posGrade){showToast('등급을 선택하세요');return;}
+  const ticketNum='TK'+String(Date.now()).slice(-6);
+  await push(ref(db,'buyers'),{
+    name,phone:phone||'—',memo:memo||'',
+    grade:posGrade.name,pay:'결제완료',
+    paidAmount:amount,isSpecial:posGrade.isSpecial||false,
+    ticket:ticketNum,createdAt:Date.now()
+  });
+  document.getElementById('r-title').textContent=`${name}님 발급 완료!`;
+  document.getElementById('r-sub').innerHTML=
+    `등급: <strong>${posGrade.name}</strong>${posGrade.isSpecial?' ⭐':''}<br>`+
+    `결제 금액: <strong>${amount?amount.toLocaleString()+'원':'무료'}</strong>`;
+  document.getElementById('r-num').textContent=ticketNum;
+  document.getElementById('result-overlay').classList.add('open');
+};
+
+window.closeResult = function(){
+  document.getElementById('result-overlay').classList.remove('open');
+  ['pos-name','pos-phone','pos-memo'].forEach(id=>document.getElementById(id).value='');
+  posInput=''; posGrade=null;
+  renderPosGrades(); updatePosDisplay();
+  document.getElementById('pos-name').focus();
+};
+
+function renderPosHistory(){
+  const todayStart=new Date(); todayStart.setHours(0,0,0,0);
+  const list=buyers.filter(b=>b.ticket&&b.createdAt>=todayStart.getTime()).sort((a,b)=>b.createdAt-a.createdAt);
+  const total=list.reduce((s,b)=>s+(b.paidAmount||0),0);
+  document.getElementById('today-total').textContent=list.length?`${list.length}건 · ${total.toLocaleString()}원`:'';
+  const el=document.getElementById('pos-history');
+  if(!list.length){el.innerHTML='<div class="empty" style="padding:2rem">아직 발급된 티켓이 없어요</div>';return;}
+  el.innerHTML=list.map(b=>`
+    <div class="ticket-item">
+      <div>
+        <div class="ti-name">${b.name}</div>
+        <div class="ti-meta">${b.phone} · <span class="badge ${b.isSpecial?'bs':'bb'}">${b.grade}</span></div>
+      </div>
+      <div>
+        <div class="ti-num">${b.ticket}</div>
+        <div class="ti-amt">${b.paidAmount?b.paidAmount.toLocaleString()+'원':'무료'}</div>
+      </div>
+    </div>`).join('');
+}
+
 // ── 토스트 ────────────────────────────────────────
 window.showToast = function(msg){
   const t=document.getElementById('toast');
-  t.textContent=msg;t.classList.add('show');
+  t.textContent=msg; t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'),2200);
 };
 </script>
